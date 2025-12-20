@@ -1,39 +1,68 @@
 <template>
-    <div class="flex items-center justify-between px-6 py-4">
-        <div class="flex gap-4 items-center">
-            <h1 class="text-xl font-semibold">
-                Bookings Dashboard
-            </h1>
-            <div class="flex items-center gap-2">
-                <InputSwitch v-model="pauseLiveUpdates" />
-                <span>{{ pauseLiveUpdates ? 'Pause Live Updates' : 'Resume Live Updates' }}</span>
-            </div>
-        </div>
-        <div class="flex items-center gap-2">
-            <InputSwitch v-model="darkMode" />
-            <span>{{ darkMode ? 'Dark Mode' : 'Light Mode' }}</span>
-        </div>
-    </div>
+    <DashboardHeader v-model:pauseLiveUpdates="pauseLiveUpdates" v-model:darkMode="darkMode">
+        <template #title>Bookings Dashboard</template>
+    </DashboardHeader>
 
     <div class="container mx-auto px-6 py-6">
         <div class="flex gap-6">
             <div class="w-1/2">
-                <SuppliersDatable />
+                <WDatable :data="suppliers" :columns="supplierColumns" />
             </div>
             <div class="w-1/2">
-                <BookingsDatatable />
+                <WDatable :data="bookings" :columns="bookingColumns" />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import SuppliersDatable from '../components/SuppliersDatable.vue';
-import BookingsDatatable from '../components/BookingsDatatable.vue';
-
+import { ref, onMounted } from 'vue';
+import WDatable from '../components/WDatable.vue';
+import DashboardHeader from '../components/DashboardHeader.vue';
+import axios from 'axios';
 const darkMode = ref(false);
 const pauseLiveUpdates = ref(false);
+
+const bookings = ref([]);
+const suppliers = ref([]);
+
+const bookingColumns = [
+    { field: 'customer', header: 'Customer', sortable: true, filter: true, filterPlaceholder: 'Search by customer' },
+    { field: 'supplierId', header: 'Supplier ID', sortable: true, filter: true, filterPlaceholder: 'Search by supplier' },
+    { field: 'country', header: 'Country', sortable: true, filter: true, filterPlaceholder: 'Search by country' },
+    { field: 'note', header: 'Note' },
+    { field: 'price', header: 'Price', sortable: true, filter: true, filterPlaceholder: 'Search by price' }
+];
+
+const supplierColumns = [
+    { field: 'name', header: 'Name', sortable: true, filter: true, filterPlaceholder: 'Search by name' },
+    { field: 'country', header: 'Country', sortable: true, filter: true, filterPlaceholder: 'Search by country' },
+    { field: 'rating', header: 'Rating', sortable: true }
+];
+
+const fetchBookings = async () => {
+    try {
+        const { data } = await axios.get('http://localhost:3000/bookings');
+        bookings.value = data;
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+const fetchSuppliers = async () => {
+    try {
+        const { data } = await axios.get('http://localhost:3000/suppliers');
+        suppliers.value = data;
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+onMounted(() => {
+    fetchBookings();
+    fetchSuppliers();
+});
+
 </script>
 
 <style scoped></style>
