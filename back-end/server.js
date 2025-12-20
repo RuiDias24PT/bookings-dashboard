@@ -9,6 +9,9 @@ let suppliers = [
   { id: 1, name: "Supplier A" },
   { id: 2, name: "Supplier B" },
   { id: 3, name: "Supplier C" },
+  { id: 4, name: "Supplier D" },
+  { id: 5, name: "Supplier E" },
+  { id: 6, name: "Supplier F" },
 ];
 
 let bookings = [
