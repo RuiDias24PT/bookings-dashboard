@@ -11,7 +11,8 @@ import Dropdown from 'primevue/dropdown'
 import Toolbar from 'primevue/toolbar'
 import Card from 'primevue/card'
 import InputSwitch from 'primevue/inputswitch';
-
+import DataView from 'primevue/dataview';
+import Chart from 'primevue/chart';
 const app = createApp(App);
 
 app.use(PrimeVue);
@@ -23,4 +24,6 @@ app.component('Dropdown', Dropdown)
 app.component('Toolbar', Toolbar)
 app.component('Card', Card)
 app.component('InputSwitch', InputSwitch);
+app.component('DataView', DataView);
+app.component('Chart', Chart);
 app.mount('#app');

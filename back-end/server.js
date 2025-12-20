@@ -15,7 +15,7 @@ let suppliers = [
 ];
 
 let bookings = [
-  { id: 1, supplierId: 1, customer: "John Doe", country: "USA", note: "VIP", price: 100 },
+  { id: 1, supplierId: 1, customer: "John Doe", country: "Canada", note: "VIP", price: 100 },
   { id: 2, supplierId: 1, customer: "Alice Smith", country: "UK", note: "", price: 150 },
   { id: 3, supplierId: 2, customer: "Bob Johnson", country: "France", note: "Late arrival", price: 200 },
   { id: 4, supplierId: 3, customer: "Carol White", country: "Germany", note: "", price: 250 },

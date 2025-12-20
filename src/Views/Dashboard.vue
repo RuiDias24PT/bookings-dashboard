@@ -3,42 +3,28 @@
         <template #title>Bookings Dashboard</template>
     </DashboardHeader>
 
-    <div class="container mx-auto px-6 py-6">
-        <div class="flex gap-6">
-            <div class="w-1/2">
-                <WDatable :data="suppliers" :columns="supplierColumns" />
-            </div>
-            <div class="w-1/2">
-                <WDatable :data="bookings" :columns="bookingColumns" />
-            </div>
-        </div>
-    </div>
+    <DashboardTables :suppliers="suppliers" :bookings="bookings"/>
+
+    <AnalyticsPanel :analytics="analytics" />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import WDatable from '../components/WDatable.vue';
-import DashboardHeader from '../components/DashboardHeader.vue';
 import axios from 'axios';
+import AnalyticsPanel from '../components/AnalyticsPanel.vue';
+import DashboardHeader from '../components/DashboardHeader.vue';
+import DashboardTables from '../components/DashboardTables.vue';
+
 const darkMode = ref(false);
 const pauseLiveUpdates = ref(false);
 
 const bookings = ref([]);
 const suppliers = ref([]);
-
-const bookingColumns = [
-    { field: 'customer', header: 'Customer', sortable: true, filter: true, filterPlaceholder: 'Search by customer' },
-    { field: 'supplierId', header: 'Supplier ID', sortable: true, filter: true, filterPlaceholder: 'Search by supplier' },
-    { field: 'country', header: 'Country', sortable: true, filter: true, filterPlaceholder: 'Search by country' },
-    { field: 'note', header: 'Note' },
-    { field: 'price', header: 'Price', sortable: true, filter: true, filterPlaceholder: 'Search by price' }
-];
-
-const supplierColumns = [
-    { field: 'name', header: 'Name', sortable: true, filter: true, filterPlaceholder: 'Search by name' },
-    { field: 'country', header: 'Country', sortable: true, filter: true, filterPlaceholder: 'Search by country' },
-    { field: 'rating', header: 'Rating', sortable: true }
-];
+const analytics = ref({
+    topSuppliers: [],
+    topCountries: [],
+    avgPricePerCountry: []
+});
 
 const fetchBookings = async () => {
     try {
@@ -58,11 +44,25 @@ const fetchSuppliers = async () => {
     }
 };
 
+const fetchAnalytics = async () => {
+    try {
+        const { data } = await axios.get('http://localhost:3000/analytics');
+        analytics.value = {
+            topSuppliers: data.topSuppliers || [],
+            topCountries: data.topCountries || [],
+            avgPricePerCountry: data.avgPricePerCountry || []
+        };
+    } catch (err) {
+        console.error(err);
+    }
+};
+
 onMounted(() => {
     fetchBookings();
     fetchSuppliers();
+    fetchAnalytics();
 });
-
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

@@ -5,7 +5,7 @@
         </span>
 
         <DataTable :value="data" paginator :rows="rows" removableSort scrollable :filters="filters" filterDisplay="row"
-            :dataKey="dataKey" style="max-height: 300px;">
+            :dataKey="dataKey" style="max-height: 18.75rem;">
             <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header"
                 :sortable="col.sortable ?? false" :filter="col.filter ?? false"
                 :filterPlaceholder="col.filterPlaceholder ?? ''" />

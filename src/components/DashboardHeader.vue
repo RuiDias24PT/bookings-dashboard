@@ -5,7 +5,6 @@
                 <slot name="title">Dashboard</slot>
             </h1>
             <div class="flex items-center gap-2">
-                <!-- Correct binding for v-model-like behavior -->
                 <InputSwitch :model-value="pauseLiveUpdates"
                     @update:model-value="$emit('update:pauseLiveUpdates', $event)" />
                 <span>{{ pauseLiveUpdates ? 'Pause Live Updates' : 'Resume Live Updates' }}</span>
