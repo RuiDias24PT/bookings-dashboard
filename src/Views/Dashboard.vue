@@ -15,8 +15,6 @@ import AnalyticsPanel from '../components/AnalyticsPanel.vue';
 import DashboardHeader from '../components/DashboardHeader.vue';
 import DashboardTables from '../components/DashboardTables.vue';
 
-const darkMode = ref(false);
-const pauseLiveUpdates = ref(false);
 
 const bookings = ref([]);
 const suppliers = ref([]);
