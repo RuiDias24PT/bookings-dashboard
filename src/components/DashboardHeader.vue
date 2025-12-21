@@ -4,27 +4,33 @@
             <h1 class="text-xl font-semibold">
                 <slot name="title">Dashboard</slot>
             </h1>
+
             <div class="flex items-center gap-2">
-                <InputSwitch :model-value="pauseLiveUpdates"
-                    @update:model-value="$emit('update:pauseLiveUpdates', $event)" />
-                <span>{{ pauseLiveUpdates ? 'Pause Live Updates' : 'Resume Live Updates' }}</span>
+                <InputSwitch v-model="pauseLiveUpdates" />
+                <span>
+                    {{ pauseLiveUpdates ? 'Pause Live Updates' : 'Resume Live Updates' }}
+                </span>
             </div>
         </div>
 
         <div class="flex items-center gap-2">
-            <InputSwitch :model-value="darkMode" @update:model-value="$emit('update:darkMode', $event)" />
+            <InputSwitch v-model="darkMode" />
             <span>{{ darkMode ? 'Dark Mode' : 'Light Mode' }}</span>
         </div>
     </div>
 </template>
 
 <script setup>
-import InputSwitch from 'primevue/inputswitch';
+import { ref, watch } from 'vue'
+import InputSwitch from 'primevue/inputswitch'
 
-const props = defineProps({
-    pauseLiveUpdates: Boolean,
-    darkMode: Boolean
-});
+const darkMode = ref(
+    localStorage.getItem("theme") !== 'light'
+)
 
-const emit = defineEmits(['update:pauseLiveUpdates', 'update:darkMode']);
+const pauseLiveUpdates = ref(false)
+
+watch(darkMode, (value) => {
+    localStorage.setItem("theme", value ? 'dark' : 'light')
+})
 </script>

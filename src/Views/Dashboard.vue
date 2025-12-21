@@ -1,5 +1,5 @@
 <template>
-    <DashboardHeader v-model:pauseLiveUpdates="pauseLiveUpdates" v-model:darkMode="darkMode">
+    <DashboardHeader>
         <template #title>Bookings Dashboard</template>
     </DashboardHeader>
 
