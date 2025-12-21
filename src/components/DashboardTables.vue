@@ -4,8 +4,10 @@
             <template #title>
                 Suppliers
             </template>
+            
             <template #content>
-                <WDatable :data="suppliers" :columns="supplierColumns" stripedRows />
+                <Skeleton v-if="loadingSuppliers" height="2.5rem" class="mb-2" v-for="i in 6" :key="i" />
+                <WDatable v-else :data="suppliers" :columns="supplierColumns" stripedRows />
             </template>
         </Card>
 
@@ -14,7 +16,8 @@
                 Bookings
             </template>
             <template #content>
-                <WDatable :data="bookings" :columns="bookingColumns" stripedRows class="pb-0"/>
+                <Skeleton v-if="loadingBookings" height="2.5rem" class="mb-2" v-for="i in 6" :key="i" />
+                <WDatable v-else :data="bookings" :columns="bookingColumns" stripedRows/>
             </template>
         </Card>
     </div>
@@ -35,6 +38,14 @@ defineProps({
         required: true,
         default: () => []
     },
+    loadingSuppliers:{
+        type:Boolean,
+        default: false
+    },
+    loadingBookings: {
+        type:Boolean,
+        default: false
+    }
 });
 
 const bookingColumns = [

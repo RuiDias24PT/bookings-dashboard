@@ -8,7 +8,11 @@
             <div class="flex gap-6">
                 <Card class="basis-[35%] shrink-0">
                     <template #content>
-                        <DataTable :value="topSuppliersFormatted" stripedRows>
+                        <template v-if="loading">
+                            <Skeleton v-for="i in 5" :key="i" height="2rem" class="mb-2" />
+                        </template>
+
+                        <DataTable v-else :value="topSuppliersFormatted" stripedRows>
                             <Column field="label" header="Top 5 Suppliers" />
                         </DataTable>
                     </template>
@@ -16,20 +20,27 @@
 
                 <Card class="basis-[35%] shrink-0">
                     <template #content>
-                        <DataTable :value="topCountriesFormatted" stripedRows>
+                        <template v-if="loading">
+                            <Skeleton v-for="i in 5" :key="i" height="2rem" class="mb-2" />
+                        </template>
+
+                        <DataTable v-else :value="topCountriesFormatted" stripedRows>
                             <Column field="label" header="Top 5 Countries" />
                         </DataTable>
                     </template>
                 </Card>
 
-                <Card class="flex flex-col basis-[30%] ">
+                <Card class="flex flex-col basis-[30%]">
                     <template #title>
                         Average Price per Country
                     </template>
 
                     <template #content>
                         <div class="flex-1 flex items-center justify-center">
-                            <Chart type="pie" :data="avgPricePieData" :options="pieOptions" class="w-full h-[10rem]" />
+                            <Skeleton v-if="loading" shape="circle" size="10rem" />
+
+                            <Chart v-else type="pie" :data="avgPricePieData" :options="pieOptions"
+                                class="w-full h-[10rem]" />
                         </div>
                     </template>
                 </Card>
@@ -53,6 +64,10 @@ const props = defineProps({
             topCountries: [],
             avgPricePerCountry: []
         })
+    }, 
+    loading: {
+        type: Boolean,
+        default: false
     }
 });
 const topCountriesFormatted = computed(() =>
