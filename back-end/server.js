@@ -6,12 +6,16 @@ app.use(cors());
 app.use(express.json());
 
 let suppliers = [
-  { id: 1, name: "Supplier A" },
-  { id: 2, name: "Supplier B" },
-  { id: 3, name: "Supplier C" },
-  { id: 4, name: "Supplier D" },
-  { id: 5, name: "Supplier E" },
-  { id: 6, name: "Supplier F" },
+  { id: 1, name: "Global Travels" },
+  { id: 2, name: "Sunset Adventures" },
+  { id: 3, name: "Blue Horizon Tours" },
+  { id: 4, name: "Peak Destinations" },
+  { id: 5, name: "Oceanic Voyages" },
+  { id: 6, name: "Wanderlust Co." },
+  { id: 7, name: "Skyline Getaways" },
+  { id: 8, name: "Golden Path Travel" },
+  { id: 9, name: "Evergreen Expeditions" },
+  { id: 10, name: "Mystic Trails" },
 ];
 
 let bookings = [
@@ -21,6 +25,15 @@ let bookings = [
   { id: 4, supplierId: 3, customer: "Carol White", country: "Germany", note: "", price: 250 },
   { id: 5, supplierId: 2, customer: "David Brown", country: "USA", note: "", price: 120 },
   { id: 6, supplierId: 3, customer: "Emma Green", country: "UK", note: "", price: 180 },
+  { id: 7, supplierId: 4, customer: "Frank Black", country: "Australia", note: "Allergic to peanuts", price: 300 },
+  { id: 8, supplierId: 5, customer: "Grace Lee", country: "Japan", note: "", price: 220 },
+  { id: 9, supplierId: 6, customer: "Hank Kim", country: "South Korea", note: "Requires wheelchair access", price: 210 },
+  { id: 10, supplierId: 7, customer: "Ivy Patel", country: "India", note: "Vegetarian", price: 190 },
+  { id: 11, supplierId: 8, customer: "Jack Wilson", country: "Brazil", note: "VIP", price: 250 },
+  { id: 12, supplierId: 9, customer: "Karen Davis", country: "Mexico", note: "", price: 180 },
+  { id: 13, supplierId: 10, customer: "Leo Martinez", country: "Spain", note: "Special seating request", price: 270 },
+  { id: 14, supplierId: 4, customer: "Mia Clark", country: "Italy", note: "", price: 230 },
+  { id: 15, supplierId: 5, customer: "Nina Lopez", country: "Portugal", note: "", price: 160 },
 ];
 
 app.get("/suppliers", (req, res) => {
