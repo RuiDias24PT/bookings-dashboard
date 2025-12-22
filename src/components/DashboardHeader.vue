@@ -10,6 +10,10 @@
                 <span>
                     {{ pauseLiveUpdates ? 'Pause Live Updates' : 'Resume Live Updates' }}
                 </span>
+                <span class="text-sm text-gray-600">
+                    Next refresh in <strong>{{ secondsToRefresh }}</strong>
+                    {{ secondsToRefresh === 1 ? 'second' : 'seconds' }}
+                </span>
             </div>
         </div>
 
@@ -24,6 +28,13 @@
 <script setup>
 import { ref, watch } from 'vue'
 import InputSwitch from 'primevue/inputswitch'
+
+const props = defineProps({
+    secondsToRefresh: {
+        type: Number,
+        required: true
+    },
+})
 
 const darkMode = ref(
     localStorage.getItem("theme") !== 'light'

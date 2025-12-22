@@ -15,6 +15,7 @@ import axios from 'axios';
 import DashboardHeader from '../components/DashboardHeader.vue';
 import DashboardTables from '../components/DashboardTables.vue';
 import AnalyticsPanel from '../components/AnalyticsPanel.vue';
+import { useAutoRefresh } from '../composables/useAutoRefresher.ts';
 
 const bookings = ref([]);
 const suppliers = ref([]);
@@ -30,17 +31,13 @@ const loading = ref({
     analytics: false
 });
 
-const pauseLiveUpdates = ref(false);
-
-const secondsToRefresh = ref(60);
-const refreshInterval = ref(null);
-const countdownInterval = ref(null);
-
-const isTabActive = ref(!document.hidden);
-
-const handleVisibilityChange = () => {
-    isTabActive.value = !document.hidden;
-};
+const {
+    secondsToRefresh,
+    pauseLiveUpdates
+} = useAutoRefresh(60, () => {
+    fetchBookings()
+    fetchSuppliers()
+})
 
 const fetchBookings = async () => {
     loading.value.bookings = true;
@@ -85,61 +82,10 @@ const fetchAnalytics = async () => {
     }
 };
 
-const startAutoRefresh = () => {
-    if (refreshInterval.value) return;
-
-    refreshInterval.value = setInterval(() => {
-        if (!isTabActive.value || pauseLiveUpdates.value) return;
-
-        fetchBookings();
-        fetchSuppliers();
-        secondsToRefresh.value = 60;
-    }, 60_000);
-};
-
-const stopAutoRefresh = () => {
-    if (refreshInterval.value) {
-        clearInterval(refreshInterval.value);
-        refreshInterval.value = null;
-    }
-};
-
-const startCountdown = () => {
-    if (countdownInterval.value) return;
-
-    secondsToRefresh.value = 60;
-    countdownInterval.value = setInterval(() => {
-        if (!isTabActive.value || pauseLiveUpdates.value) return;
-
-        if (secondsToRefresh.value > 0) {
-            secondsToRefresh.value--;
-        }
-    }, 1000);
-};
-
-const stopCountdown = () => {
-    if (countdownInterval.value) {
-        clearInterval(countdownInterval.value);
-        countdownInterval.value = null;
-    }
-};
-
 onMounted(() => {
     fetchBookings();
     fetchSuppliers();
     fetchAnalytics();
-
-    startAutoRefresh();
-    startCountdown();
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-});
-
-onUnmounted(() => {
-    stopAutoRefresh();
-    stopCountdown();
-
-    document.removeEventListener('visibilitychange', handleVisibilityChange);
 });
 </script>
 
