@@ -75,7 +75,6 @@ import InputNumber from 'primevue/inputnumber';
 import axios from 'axios';
 import { ref, computed, watch } from 'vue';
 
-
 const emit = defineEmits(['update:booking']);
 
 const props = defineProps({
