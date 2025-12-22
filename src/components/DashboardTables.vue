@@ -101,7 +101,12 @@ const filteredBookings = computed(() => {
 watch(
     () => filteredBookings.value,
     (val) => {
-        localBookings.value = val.map(b => ({ ...b }));
+        const editingIds = editingRows.value.map(row => row.id);
+
+        localBookings.value = val.map(b => {
+            const localEdit = localBookings.value.find(lb => lb.id === b.id && editingIds.includes(lb.id));
+            return localEdit ? localEdit : { ...b };
+        });
     },
     { immediate: true }
 );
