@@ -13,4 +13,8 @@ export const apiService = {
   async getAnalytics() {
     return fetchWithBackoff(() => axios.get("http://localhost:3000/analytics"));
   },
+
+  async update(booking: any) {
+    return axios.put(`http://localhost:3000/bookings/${booking.id}`, booking);
+  },
 };

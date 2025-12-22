@@ -66,13 +66,9 @@
 </template>
 
 <script setup>
-import Card from 'primevue/card';
 import WDatable from '../components/WDatable.vue';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import InputText from 'primevue/inputtext';
-import InputNumber from 'primevue/inputnumber';
-import axios from 'axios';
+import { useToast } from 'primevue/usetoast';
+import { apiService } from '../services/apiService';
 import { ref, computed, watch } from 'vue';
 
 const emit = defineEmits(['update:booking']);
@@ -83,7 +79,7 @@ const props = defineProps({
     loadingSuppliers: { type: Boolean, default: false },
     loadingBookings: { type: Boolean, default: false }
 });
-
+const toast = useToast();
 const selectedSupplier = ref(null);
 const editingRows = ref([]);
 const supplierColumns = [
@@ -114,9 +110,15 @@ watch(
 const saveBooking = async (event) => {
     const booking = event.newData;
     try {
-        await axios.put(`http://localhost:3000/bookings/${booking.id}`, booking);
+        await apiService.update(booking);
         emit('update:booking', { ...booking });
     } catch (err) {
+        toast.add({
+            severity: 'error',
+            summary: 'Failed to edit booking',
+            detail: 'Please check your connection or try again later.',
+            life: 3000
+        });
         console.error('Failed to update booking', err);
     }
 };
