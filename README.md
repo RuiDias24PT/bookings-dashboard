@@ -13,19 +13,17 @@
 **Install**
 ```bash
 # Install front-end deps
-npm install
+cd front-end && npm install
 # Install back-end deps
 cd back-end && npm install
+# Install project deps
+npm install
+
 ```
 
 **Run (development)**
 ```bash
 # From project root (runs client + server concurrently)
-npm run dev
-# Or run server and client separately:
-# Backend
-npm run server
-# Frontend
 npm run dev
 ```
 
