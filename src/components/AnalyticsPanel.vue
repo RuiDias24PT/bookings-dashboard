@@ -54,6 +54,7 @@ import { computed } from 'vue';
 import Card from 'primevue/card';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import { generateHslColors } from '../utils/colors';
 
 const props = defineProps({
     analytics: {
@@ -89,7 +90,7 @@ const avgPricePieData = computed(() => {
         labels: props.analytics.avgPricePerCountry.map(i => i.country),
         datasets: [{
             data: props.analytics.avgPricePerCountry.map(i => i.avgPrice),
-            backgroundColor: generateColors(count)
+            backgroundColor: generateHslColors(count)
         }]
     };
 });
@@ -117,11 +118,6 @@ const pieOptions = computed(() => {
         }
     };
 });
-
-const generateColors = (count) =>
-    Array.from({ length: count }, (_, i) =>
-        `hsl(${Math.round((360 / count) * i)}, 70%, 55%)`
-    );
 </script>
 
 <style scoped>
