@@ -3,8 +3,8 @@
         <template #title>Bookings Dashboard</template>
     </DashboardHeader>
 
-    <DashboardTables :suppliers="suppliers" :bookings="bookings" :loadingSuppliers="loading.suppliers"
-        :loadingBookings="loading.bookings" />
+    <DashboardTables :suppliers="suppliers" :bookings="bookings" :loadingSuppliers="loading.suppliers" 
+        :loadingBookings="loading.bookings" @update:booking="updateBooking" />
 
     <AnalyticsPanel :analytics="analytics" :loading="loading.analytics" />
     <Toast />
@@ -108,6 +108,14 @@ const fetchAnalytics = async () => {
     } finally {
         loading.value.analytics = false;
     }
+};
+
+const updateBooking = (updatedBooking) => {
+    const index = bookings.value.findIndex(b => b.id === updatedBooking.id);
+    if (index !== -1) {
+        bookings.value[index] = updatedBooking;
+    }
+    fetchAnalytics();
 };
 
 onMounted(() => {

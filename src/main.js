@@ -16,7 +16,8 @@ import DataView from 'primevue/dataview';
 import Chart from 'primevue/chart';
 import Skeleton from 'primevue/skeleton';
 import ToastService from 'primevue/toastservice';
-
+import InputText from 'primevue/inputtext';
+import InputNumber from 'primevue/inputnumber';
 const app = createApp(App);
 
 app.use(PrimeVue);
@@ -31,6 +32,8 @@ app.component('InputSwitch', InputSwitch);
 app.component('DataView', DataView);
 app.component('Chart', Chart);
 app.component('Skeleton', Skeleton);
+app.component('InputText', InputText);
+app.component('InputNumber', InputNumber);
 app.use(ToastService);
 
 app.mount('#app');
