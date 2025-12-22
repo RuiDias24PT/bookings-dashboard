@@ -32,7 +32,7 @@
 
                 <Card class="flex flex-col basis-[30%]">
                     <template #title>
-                        Average Price per Country
+                        Average Price per Country €
                     </template>
 
                     <template #content>

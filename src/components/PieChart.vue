@@ -15,7 +15,7 @@
 import { computed } from 'vue';
 import Chart from 'primevue/chart';
 import { generateHslColors } from '../utils/colors';
-
+import { formatEuro } from '../utils/formatCurrency.ts';
 const props = defineProps({
     labels: { type: Array, required: true, default: () => [] },
     values: { type: Array, required: true, default: () => [] }
@@ -44,7 +44,7 @@ const chartOptions = computed(() => {
             },
             tooltip: {
                 callbacks: {
-                    label: ctx => `${ctx.label}: ${ctx.raw.toFixed(2)}`
+                    label: ctx => `${ctx.label}: ${formatEuro(ctx.raw)}`
                 }
             }
         }

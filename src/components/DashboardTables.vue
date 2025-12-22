@@ -49,8 +49,12 @@
                     </Column>
 
                     <Column field="price" header="Price">
+                        <template #body="slotProps">
+                            {{ formatEuro(slotProps.data.price) }}
+                        </template>
                         <template #editor="{ data, field }">
-                            <InputNumber v-model="data[field]" mode="decimal" :input-style="{ maxWidth: '6rem' }" />
+                            <InputNumber v-model="data[field]" mode="currency" currency="EUR" locale="de-DE"
+                                :input-style="{ maxWidth: '6rem' }" />
                         </template>
                     </Column>
 
@@ -70,6 +74,7 @@ import WDatable from '../components/WDatable.vue';
 import { useToast } from 'primevue/usetoast';
 import { apiService } from '../services/apiService';
 import { ref, computed, watch } from 'vue';
+import { formatEuro } from '../utils/formatCurrency.ts';
 
 const emit = defineEmits(['update:booking']);
 
