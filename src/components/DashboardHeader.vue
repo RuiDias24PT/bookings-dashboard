@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-between px-6 py-4">
+    <div class="flex items-center justify-between px-8 py-4">
         <div class="flex gap-4 items-center">
             <h1 class="text-xl font-semibold">
                 <slot name="title">Dashboard</slot>
@@ -15,7 +15,8 @@
 
         <div class="flex items-center gap-2">
             <InputSwitch v-model="darkMode" />
-            <span>{{ darkMode ? 'Dark Mode' : 'Light Mode' }}</span>
+            <i v-if="darkMode" class="pi pi-moon"></i>
+            <i v-else class="pi pi-sun"></i>
         </div>
     </div>
 </template>
@@ -28,7 +29,10 @@ const darkMode = ref(
     localStorage.getItem("theme") !== 'light'
 )
 
-const pauseLiveUpdates = ref(false)
+const pauseLiveUpdates = defineModel('pauseLiveUpdates', {
+    type: Boolean,
+    default: false
+});
 
 watch(darkMode, (value) => {
     localStorage.setItem("theme", value ? 'dark' : 'light')

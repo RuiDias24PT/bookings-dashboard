@@ -49,14 +49,14 @@ defineProps({
 });
 
 const bookingColumns = [
-    { field: 'customer', header: 'Customer' },
-    { field: 'country', header: 'Country' },
-    { field: 'note', header: 'Note' },
-    { field: 'price', header: 'Price' }
+    { field: 'customer', header: 'Customer', sortable: true },
+    { field: 'country', header: 'Country', sortable: true },
+    { field: 'note', header: 'Note', sortable: true },
+    { field: 'price', header: 'Price', sortable: true }
 ];
 
 const supplierColumns = [
-    { field: 'name', header: 'Name' },
+    { field: 'name', header: 'Name', sortable: true  },
 ];
 </script>
 

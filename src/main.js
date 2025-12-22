@@ -10,6 +10,7 @@ import ToggleButton from 'primevue/togglebutton'
 import Dropdown from 'primevue/dropdown'
 import Toolbar from 'primevue/toolbar'
 import Card from 'primevue/card'
+import 'primeicons/primeicons.css';
 import InputSwitch from 'primevue/inputswitch';
 import DataView from 'primevue/dataview';
 import Chart from 'primevue/chart';
