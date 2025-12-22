@@ -51,7 +51,6 @@ const fetchBookings = async () => {
         bookings.value = data;
     } catch (err) {
         console.error(err);
-        console.error(err);
         toast.add({
             severity: 'error',
             summary: 'Failed to load bookings',

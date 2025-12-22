@@ -36,12 +36,8 @@
                     </template>
 
                     <template #content>
-                        <div class="flex-1 flex items-center justify-center">
-                            <Skeleton v-if="loading" shape="circle" size="10rem" />
-
-                            <Chart v-else type="pie" :data="avgPricePieData" :options="pieOptions"
-                                class="w-full h-[10rem]" />
-                        </div>
+                        <Skeleton v-if="loading" shape="circle" size="10rem" />
+                        <PieChart v-else :labels="avgPriceLabels" :values="avgPriceValues" />
                     </template>
                 </Card>
             </div>
@@ -54,7 +50,7 @@ import { computed } from 'vue';
 import Card from 'primevue/card';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import { generateHslColors } from '../utils/colors';
+import PieChart from './PieChart.vue';
 
 const props = defineProps({
     analytics: {
@@ -65,17 +61,9 @@ const props = defineProps({
             topCountries: [],
             avgPricePerCountry: []
         })
-    }, 
-    loading: {
-        type: Boolean,
-        default: false
-    }
+    },
+    loading: { type: Boolean, default: false }
 });
-const topCountriesFormatted = computed(() =>
-    props.analytics.topCountries.map((item, index) => ({
-        label: `${index + 1}. ${item.country} (${item.total})`
-    }))
-);
 
 const topSuppliersFormatted = computed(() =>
     props.analytics.topSuppliers.map((item, index) => ({
@@ -83,43 +71,19 @@ const topSuppliersFormatted = computed(() =>
     }))
 );
 
-const avgPricePieData = computed(() => {
-    const count = props.analytics.avgPricePerCountry.length;
+const topCountriesFormatted = computed(() =>
+    props.analytics.topCountries.map((item, index) => ({
+        label: `${index + 1}. ${item.country} (${item.total})`
+    }))
+);
 
-    return {
-        labels: props.analytics.avgPricePerCountry.map(i => i.country),
-        datasets: [{
-            data: props.analytics.avgPricePerCountry.map(i => i.avgPrice),
-            backgroundColor: generateHslColors(count)
-        }]
-    };
-});
+const avgPriceLabels = computed(() =>
+    props.analytics.avgPricePerCountry.map(i => i.country)
+);
 
-const pieOptions = computed(() => {
-    const style = getComputedStyle(document.documentElement);
-    const textColor = style.getPropertyValue('--text-color');
-
-    return {
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'right',
-                labels: {
-                    color: textColor,
-                    usePointStyle: true
-                }
-            },
-            tooltip: {
-                callbacks: {
-                    label: (ctx) =>
-                        `${ctx.label}: ${ctx.raw.toFixed(2)}`
-                }
-            }
-        }
-    };
-});
+const avgPriceValues = computed(() =>
+    props.analytics.avgPricePerCountry.map(i => i.avgPrice)
+);
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
