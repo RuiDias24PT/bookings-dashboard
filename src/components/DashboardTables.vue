@@ -32,25 +32,25 @@
                     @row-edit-save="saveBooking" @row-edit-cancel="cancelEdit">
                     <Column field="customer" header="Customer">
                         <template #editor="{ data, field }">
-                            <InputText v-model="data[field]" />
+                            <InputText v-model="data[field]" :input-style="{ maxWidth: '6rem' }" />
                         </template>
                     </Column>
 
                     <Column field="country" header="Country">
                         <template #editor="{ data, field }">
-                            <InputText v-model="data[field]" />
+                            <InputText v-model="data[field]" :input-style="{ maxWidth: '6rem' }" />
                         </template>
                     </Column>
 
                     <Column field="note" header="Note">
                         <template #editor="{ data, field }">
-                            <InputText v-model="data[field]" />
+                            <InputText v-model="data[field]" :input-style="{ maxWidth: '6rem' }" />
                         </template>
                     </Column>
 
                     <Column field="price" header="Price">
                         <template #editor="{ data, field }">
-                            <InputNumber v-model="data[field]" mode="decimal" />
+                            <InputNumber v-model="data[field]" mode="decimal" :input-style="{ maxWidth: '6rem' }" />
                         </template>
                     </Column>
 
@@ -136,5 +136,4 @@ const cancelEdit = (event) => {
 :deep(.p-datatable .p-paginator-bottom) {
     border-width: 0 !important;
 }
-
 </style>
