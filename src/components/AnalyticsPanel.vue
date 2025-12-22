@@ -36,7 +36,16 @@
                     </template>
 
                     <template #content>
-                        <Skeleton v-if="loading" shape="circle" size="10rem" />
+                        <div v-if="loading" class="flex items-start gap-10">
+                            <Skeleton shape="circle" size="10rem" />
+
+                            <div class="flex flex-col justify-start gap-2">
+                                <Skeleton height="2rem" width="14rem" />
+                                <Skeleton height="2rem" width="14rem" />
+                                <Skeleton height="2rem" width="14rem" />
+                                <Skeleton height="2rem" width="14rem" />
+                            </div>
+                        </div>
                         <PieChart v-else :labels="avgPriceLabels" :values="avgPriceValues" />
                     </template>
                 </Card>
