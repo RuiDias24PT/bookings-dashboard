@@ -18,6 +18,7 @@ import DashboardTables from '../components/DashboardTables.vue';
 import AnalyticsPanel from '../components/AnalyticsPanel.vue';
 import { useAutoRefresh } from '../composables/useAutoRefresher.ts';
 import { fetchWithBackoff } from '../utils/fetchwithBackoff.ts';
+import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
 
 const toast = useToast();
@@ -90,7 +91,7 @@ const fetchAnalytics = async () => {
     loading.value.analytics = true;
     await new Promise(r => setTimeout(r, 3000)); // simulate loading
     try {
-        const { data } = await axios.get('http://localhost:3000/analytics');
+        const { data } = await fetchWithBackoff(() =>axios.get('http://localhost:3000/analytics'));
         analytics.value = {
             topSuppliers: data.topSuppliers || [],
             topCountries: data.topCountries || [],
@@ -98,6 +99,12 @@ const fetchAnalytics = async () => {
         };
     } catch (err) {
         console.error(err);
+        toast.add({
+            severity: 'error',
+            summary: 'Failed to load analytics',
+            detail: 'Please check your connection or try again later.',
+            life: 3000
+        });
     } finally {
         loading.value.analytics = false;
     }
