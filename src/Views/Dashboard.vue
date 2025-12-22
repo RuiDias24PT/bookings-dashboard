@@ -12,14 +12,13 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
 import DashboardHeader from '../components/DashboardHeader.vue';
 import DashboardTables from '../components/DashboardTables.vue';
 import AnalyticsPanel from '../components/AnalyticsPanel.vue';
 import { useAutoRefresh } from '../composables/useAutoRefresher.ts';
-import { fetchWithBackoff } from '../utils/fetchwithBackoff.ts';
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
+import { apiService } from '../services/apiService.ts';
 
 const toast = useToast();
 const bookings = ref([]);
@@ -48,9 +47,7 @@ const fetchBookings = async () => {
     loading.value.bookings = true;
     await new Promise(r => setTimeout(r, 2000)); // simulate loading
     try {
-        const { data } = await fetchWithBackoff(() =>
-            axios.get('http://localhost:3000/bookings')
-        )
+        const { data } = await apiService.getBookings()
         bookings.value = data;
     } catch (err) {
         console.error(err);
@@ -70,9 +67,7 @@ const fetchSuppliers = async () => {
     loading.value.suppliers = true;
     await new Promise(r => setTimeout(r, 2000)); // simulate loading
     try {
-        const { data } = await fetchWithBackoff(() =>
-            axios.get('http://localhost:3000/suppliers')
-        )
+        const { data } = await apiService.getSuppliers();
         suppliers.value = data;
     } catch (err) {
         console.error(err);
@@ -91,7 +86,7 @@ const fetchAnalytics = async () => {
     loading.value.analytics = true;
     await new Promise(r => setTimeout(r, 3000)); // simulate loading
     try {
-        const { data } = await fetchWithBackoff(() =>axios.get('http://localhost:3000/analytics'));
+        const { data } = await apiService.getAnalytics();
         analytics.value = {
             topSuppliers: data.topSuppliers || [],
             topCountries: data.topCountries || [],
